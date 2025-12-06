@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Task Work </title>
+
+<style>
+  :root{
+    --pink:#ff66c4;
+    --hot:#ff4eb8;
+    --light:#ffe7f5;
+    --muted:#777;
+    --card-bg:#fff;
+  }
+
+  html,body{height:100%;margin:0;font-family:Arial,Helvetica,sans-serif;background:#f2f2f4;}
+
+  .wrap {
+    width:360px;
+    margin:28px auto;
+    padding:18px;
+    background:var(--card-bg);
+    border-radius:12px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.12);
+    position:relative;
+  }
+
+  .title {
+    text-align:center;
+    border:2px solid var(--hot);
+    color:var(--hot);
+    font-weight:700;
+    padding:10px;
+    border-radius:10px;
+    margin-bottom:14px;
+  }
+
+  .option {
+    position:relative;
+    padding:14px;
+    border-radius:10px;
+    border:2px solid #ffd4ea;
+    margin-bottom:12px;
+    cursor:pointer;
+    background:#fff;
+  }
+  .option.selected { border-color:var(--hot); background:var(--light); }
+  .option input[type="radio"]{ margin-right:8px; transform:scale(1.02); }
+
+  .discount-label{
+    background:var(--hot);
+    color:#fff;
+    padding:3px 7px;
+    font-size:11px;
+    border-radius:4px;
+    margin-left:8px;
+  }
+
+  .price-line{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-left:28px;
+    font-weight:700;
+    color:#222;
+  }
+  .price-line .old {
+    text-decoration:line-through;
+    color:var(--muted);
+    font-weight:500;
+    font-size:12px;
+  }
+
+  .popular {
+    position:absolute;
+    right:-2px;
+    top:-11px;
+    background:var(--hot);
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
+    padding:3px 10px;
+    border-radius:4px;
+    z-index:999;
+    box-shadow:0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  .config-box{
+    margin-top:12px;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #f0e0ee;
+    background:#fff;
+  }
+  .variant-row { display:flex; gap:10px; align-items:center; margin-bottom:8px; }
+  .variant-row label{ min-width:28px; font-size:13px; color:#444; }
+
+  select{
+    padding:6px;
+    border-radius:6px;
+    border:1px solid #ddd;
+    background:#fff;
+    min-width:110px;
+  }
+
+  .summary {
+    margin-top:14px;
+    text-align:center;
+    color:#333;
+    font-size:14px;
+  }
+  .summary .total {
+    font-size:18px;
+    font-weight:800;
+    color:#000;
+  }
+  .summary .savings {
+    display:block;
+    margin-top:6px;
+    color:#1aa81a;
+    font-weight:700;
+  }
+ 
+  .tot {
+  font-weight: bold;
+    font-size: medium;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+	}
+  .tol1 {
+    font-style: italic;
+    font-size: small;
+    color: #FF4EB8;
+	}
+	
+  .savings {
+    margin-top: 10px;
+	float: right;
+	font-style: italic
+	}
+	
+  .cta {
+    width:100%;
+    margin-top:14px;
+    padding:12px;
+    border-radius:10px;
+    border:0;
+    background:var(--pink);
+    color:#fff;
+    font-size:16px;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .cta[disabled]{ opacity:0.6; cursor:not-allowed; }
+  .cta.added { background:#6acb7b; }
+  .tick { margin-left:8px; font-weight:900; }
+
+  .pumper{
+    margin-top:10px;
+    text-align:center;
+    font-size:12px;
+    color:#999;
+  }
+
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+  <div class="title">YAY! It's BOGO</div>
+
+  <!-- 1 Unit -->
+  <div class="option" data-units="1" data-list="24.00" data-discount="0.10" id="opt-1">
+    <label>
+      <input type="radio" name="unitOption"> 
+      1 Unit <span class="discount-label">10% OFF</span>
+      <span class="price-line">
+        <span class="final">$<span class="final-val">0.00</span> USD</span>
+        <span class="old">$<span class="old-val">0.00</span></span>
+      </span>
+    </label>
+  </div>
+
+  <!-- 2 Unit (Popular) -->
+  <div class="option" data-units="2" data-list="48.00" data-discount="0.20" id="opt-2">
+    <span class="popular">MOST POPULAR</span>
+    <label>
+      <input type="radio" name="unitOption">
+      2 Unit <span class="discount-label">20% OFF</span>
+    </label>
+    <span class="price-line">
+      <span class="final">$<span class="final-val">0.00</span> USD</span>
+      <span class="old">$<span class="old-val">0.00</span></span>
+    </span>
+  </div>
+
+  <!-- 3 Unit -->
+  <div class="option" data-units="3" data-list="72.00" data-discount="0.30" id="opt-3">
+    <label>
+      <input type="radio" name="unitOption">
+      3 Unit <span class="discount-label">30% OFF</span>
+    </label>
+    <span class="price-line">
+      <span class="final">$<span class="final-val">0.00</span> USD</span>
+      <span class="old">$<span class="old-val">0.00</span></span>
+    </span>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary">
+    <div class="tot">
+     <span class="tol1" id="delivery">Free Delivery</span>
+     <span class="tol" id="totalPrice">Total:$0.00 USD</span>
+    </div>
+     
+    <div>
+    	<span class="savings" id="saveText">Congrats!! You saved $0.00</span>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <button class="cta" id="addCart" disabled>+ Add to Cart</button>
+
+  <!-- Powered By Pumper -->
+  <div class="pumper">© Powered by Pumper</div>
+
+</div>
+
+<script>
+function fmt(n){ return n.toFixed(2); }
+
+const optionNodes = document.querySelectorAll('.option');
+const totalEl = document.getElementById('totalPrice');
+const saveEl = document.getElementById('saveText');
+const addBtn = document.getElementById('addCart');
+
+let selectedOption = null;
+let addedForOptionId = null;
+const savedSelections = {};
+
+optionNodes.forEach(opt => {
+  const units = parseInt(opt.dataset.units,10);
+  const listTotal = parseFloat(opt.dataset.list);
+  const discount = parseFloat(opt.dataset.discount);
+  const finalTotal = listTotal * (1 - discount);
+
+  opt.querySelector('.final-val').textContent = fmt(finalTotal);
+  opt.querySelector('.old-val').textContent = fmt(listTotal);
+
+  if(!savedSelections[opt.id]){
+    savedSelections[opt.id] = [];
+    for(let i=0;i<units;i++){
+      savedSelections[opt.id].push({ size:'S', color:'Black' });
+    }
+  }
+
+  const cfg = document.createElement('div');
+  cfg.className = 'config-box';
+  cfg.style.display = 'none';
+  cfg.dataset.generated = "1";
+  opt.appendChild(cfg);
+  populateConfigBox(opt, cfg);
+});
+
+function populateConfigBox(opt, cfg){
+  const units = parseInt(opt.dataset.units,10);
+  cfg.innerHTML = '';
+  for(let i=0;i<units;i++){
+    const row = document.createElement('div');
+    row.className = 'variant-row';
+
+    const lbl = document.createElement('label');
+    lbl.textContent = '#' + (i+1);
+    row.appendChild(lbl);
+
+    const sizeSel = document.createElement('select');
+    ['S','M','L','XL'].forEach(v=>{
+      const o=document.createElement('option'); o.value=v; o.textContent=v; sizeSel.appendChild(o);
+    });
+
+    const colorSel = document.createElement('select');
+    ['Black','White','Pink','Red'].forEach(v=>{
+      const o=document.createElement('option'); o.value=v; o.textContent=v; colorSel.appendChild(o);
+    });
+
+    sizeSel.value = savedSelections[opt.id][i].size;
+    colorSel.value = savedSelections[opt.id][i].color;
+
+    sizeSel.onchange = ()=> savedSelections[opt.id][i].size=sizeSel.value;
+    colorSel.onchange = ()=> savedSelections[opt.id][i].color=colorSel.value;
+
+    row.appendChild(sizeSel);
+    row.appendChild(colorSel);
+    cfg.appendChild(row);
+  }
+}
+
+optionNodes.forEach(opt=>{
+  opt.addEventListener('click',(e)=>{
+    if(e.target.tagName==="SELECT") return;
+    setSelectedOption(opt.id);
+  });
+
+  opt.querySelector('input[type=radio]').addEventListener('click',e=>{
+    e.stopPropagation();
+    setSelectedOption(opt.id);
+  });
+});
+
+function setSelectedOption(id){
+  const newOpt=document.getElementById(id);
+  if(selectedOption && selectedOption.id===id) return;
+
+  if(addedForOptionId && addedForOptionId!==id){
+    addedForOptionId=null;
+    setAddButtonDefault();
+  }
+
+  optionNodes.forEach(o=>{
+    const cfg=o.querySelector('.config-box');
+    if(o.id===id){
+      o.classList.add('selected');
+      o.querySelector('input[type=radio]').checked=true;
+      cfg.style.display='block';
+      populateConfigBox(o,cfg);
+    } else {
+      o.classList.remove('selected');
+      o.querySelector('input[type=radio]').checked=false;
+      cfg.style.display='none';
+    }
+  });
+
+  selectedOption=newOpt;
+  updateTotalForSelected();
+  addBtn.disabled=false;
+}
+
+function updateTotalForSelected(){
+  if(!selectedOption){
+    totalEl.textContent='$0.00 USD';
+    saveEl.style.display='none';
+    return;
+  }
+  const list=parseFloat(selectedOption.dataset.list);
+  const disc=parseFloat(selectedOption.dataset.discount);
+  const final=list*(1-disc);
+
+  totalEl.textContent=`$${fmt(final)} USD`;
+  const saved=list-final;
+  saveEl.textContent=`Congrats!! You saved $${fmt(saved)}`;
+  saveEl.style.display='block';
+}
+
+addBtn.addEventListener('click',()=>{
+  if(!selectedOption) return;
+  if(addedForOptionId===selectedOption.id){
+    addedForOptionId=null;
+    setAddButtonDefault();
+  } else {
+    addedForOptionId=selectedOption.id;
+    setAddButtonAdded();
+  }
+});
+
+function setAddButtonDefault(){
+  addBtn.classList.remove('added');
+  addBtn.innerHTML='+ Add to Cart';
+}
+function setAddButtonAdded(){
+  addBtn.classList.add('added');
+  addBtn.innerHTML='Added to Cart <span class="tick">✓</span>';
+}
+
+updateTotalForSelected();
+setAddButtonDefault();
+</script>
+
+</body>
+</html>
